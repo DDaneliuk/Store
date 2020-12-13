@@ -1,0 +1,86 @@
+[{
+    "name":"RESPONSE SUPER SHOES",
+    "size":"10",
+    "color":"Black",
+    "price":"90",
+    "image":"assets/images/products/black1.jpg"
+},{  
+    "name":"ULTRABOOST DNA SHOES",
+    "size":"11",
+    "color":"Black",
+    "price":"180",
+    "image":"assets/images/products/black2.jpg"
+},{  
+    "name":"SUPERNOVA SHOES",
+    "size":"11",
+    "color":"Black",
+    "price":"100",
+    "image":"assets/images/products/black3.jpg"
+},{  
+    "name":"KANSAS JAYHAWKS ULTRABOOST 1.0 DNA SHOES",
+    "size":"11",
+    "color":"Blue",
+    "price":"153",
+    "image":"assets/images/products/blue1.jpg"
+},{  
+    "name":"ULTRABOOST DNA SHOES",
+    "size":"11",
+    "color":"Brown",
+    "price":"200",
+    "image":"assets/images/products/brown1.jpg"
+},{  
+    "name":"ULTRABOOST 20 SHOES",
+    "size":"11",
+    "color":"Green",
+    "price":"180",
+    "image":"assets/images/products/green1.jpg"
+},{  
+    "name":"ULTRABOOST 2.0 DNA X PE SHOES",
+    "size":"11",
+    "color":"Green",
+    "price":"199",
+    "image":"assets/images/products/green2.jpg"
+},{  
+    "name":"NITE JOGGER SHOES",
+    "size":"11",
+    "color":"Green",
+    "price":"104",
+    "image":"assets/images/products/green3.jpg"
+},{  
+    "name":"D ROSE 11 SHOES",
+    "size":"11",
+    "color":"Green",
+    "price":"354",
+    "image":"assets/images/products/green4.jpg"
+},{  
+    "name":"DAILY 3.0 SHOES",
+    "size":"11",
+    "color":"Grey",
+    "price":"400",
+    "image":"assets/images/products/grey1.jpg"
+},{  
+    "name":"NITE JOGGER SHOES",
+    "size":"11",
+    "color":"Grey",
+    "price":"275",
+    "image":"assets/images/products/grey2.jpg"
+},{  
+    "name":"OZWEEGO SHOES",
+    "size":"11",
+    "color":"Orange",
+    "price":"140",
+    "image":"assets/images/products/orange1.jpg"
+},
+{  
+    "name":"ULTRABOOST 20 SHOES",
+    "size":"11",
+    "color":"Orange",
+    "price":"180",
+    "image":"assets/images/products/orange2.jpg"
+},{  
+    "name":"D ROSE 11 BRENDA SHOES",
+    "size":"11",
+    "color":"Red",
+    "price":"220",
+    "image":"assets/images/products/red1.jpg"
+}]

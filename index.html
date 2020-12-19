@@ -24,13 +24,23 @@
                     <input type="text" placeholder="search">
                 </div>
                 <div class="menu">
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Catalog</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#"><svg viewBox="0 0 32 32"><path d="M12 7V6c0-1 1-2 2-2h4c1 0 2 1 2 2v1h7v19H5V7h7zm14 1H6v17h20V8zM13 6v1h6V6c0-.5-.5-1-1-1h-4a1 1 0 0 0-1 1z"></path></svg></a></li>
-                    </ul>
+                    <div class="hideMenu">
+                        <ul >
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Catalog</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="showMenu">
+                        <div><img class="hideIcon" style="width: 27px;" src="assets/images/Logo/search.png"></div>
+                        <div><svg viewBox="0 0 32 32"><path d="M12 7V6c0-1 1-2 2-2h4c1 0 2 1 2 2v1h7v19H5V7h7zm14 1H6v17h20V8zM13 6v1h6V6c0-.5-.5-1-1-1h-4a1 1 0 0 0-1 1z"></path></svg></div>
+                        <div><img class="hideIcon" style="width: 33px;" src="assets/images/Logo/hamburger.png"></div>
+                    </div>
+                </div>
+                
+                <div class="bin">
+                    
                 </div>
             </header>
             <!-- Breadcrumb navigation block --> 
@@ -47,33 +57,47 @@
                 <div class="main_container">
                 <!-- Filter block -->
                     <div class="filter">
-                    <h2>Filters</h2>
-                    <label class="for_number">SIZE</label>
-                    <input type ="number" placeholder="10">
-                    <label class="for_number">COLOR</label>
-                    <div class="colors">
-                        <input id="black" type="checkbox">
-                        <label for="black"></label>
-                        <input id="blue" type="checkbox">
-                        <label for="blue"></label>
-                        <input id="grey" type="checkbox">
-                        <label for="grey"></label>
-                        <input id="brown" type="checkbox">
-                        <label for="brown"></label>
-                        <input id="green" type="checkbox">
-                        <label for="green"></label>
-                        <input id="red" type="checkbox">
-                        <label for="red"></label>
-                        <input id="gold" type="checkbox">
-                        <label for="gold"></label>
-                        <input id="orange" type="checkbox">
-                        <label for="orange"></label>                          
-                    </div>
-                    <label class="for_number">PRICE</label>
-                    <input type ="range" min="25" max="3000" class="slider">
-                    <div class="slider_val">
-                        <p>25</p>
-                        <p>3000</p>
+                    <h2>Filters<svg id="arrow-down" viewBox="0 0 16 24"><title>arrow-down</title><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M1.5 9L8 15.5 14.5 9"></path></svg></h2>
+                    <div class="filter_block">
+                        <div class="flex">
+                            <label class="for_number">SIZE</label>
+                            <select class="filter_size" id="size" onchange="click()">
+                                <option value="">Choose size</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                            </select>
+                        </div>
+                        <div class="flex">
+                            <label class="for_number">COLOR</label>
+                            <div class="colors">
+                                <input name="color" id="black" type="checkbox" value="black">
+                                <label for="black"></label>
+                                <input name="color" id="blue" type="checkbox" value="blue">
+                                <label for="blue"></label>
+                                <input name="color" id="grey" type="checkbox" value="blue">
+                                <label for="grey"></label>
+                                <input name="color" id="brown" type="checkbox" value="blue">
+                                <label for="brown"></label>
+                                <input name="color" id="green" type="checkbox" value="blue">
+                                <label for="green"></label>
+                                <input name="color" id="red" type="checkbox" value="blue">
+                                <label for="red"></label>
+                                <input name="color" id="gold" type="checkbox" value="blue">
+                                <label for="gold"></label>
+                                <input name="color" id="orange" type="checkbox" value="blue">
+                                <label for="orange"></label>                          
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <label class="for_number">PRICE</label>
+                                <input  type ="range" min="25" max="3000" class="slider">
+                                <div class="slider_val">
+                                    <p>25</p>
+                                    <p>3000</p>
+                                </div>
+                            </div>
                     </div>
                     </div>
                    <!--Catalog-->
@@ -89,20 +113,13 @@
                     <!-- Items block -->
                         <div id="product_block" class="product_block">
                         </div>
-                        <div class="pagination" id="pagination">
-                            <a href="#">&lt;</a>
-                            <a href="#">1</a>
-                            <a class="active" href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">5</a>
-                            <a href="#">6</a>
-                            <a href="#">&gt;</a>
-                          </div>
+                        <div class="pagination" id="pagination"></div>                      
+                        </div>
                     </div>
                 </div>
             </div>
     </div>
-    <script src="js/script.js"></script>
+	<script src="js/test.js"></script>
+    <script src="js/script.js"></script>   
 </body>
 </html>

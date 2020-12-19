@@ -132,6 +132,8 @@ ul.breadcrumb li+li:before {
     margin:0 auto;
     display: block;
     transition:0.2s;
+    -moz-appearance: none; 
+	-webkit-appearance: none;
   }
   label.for_number {
     display: block;

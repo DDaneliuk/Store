@@ -1,38 +1,38 @@
-var dataproduct;
-
 let allData;
 let currentData;
-
-function disp(data) {
-  console.log(data);
-  DisplayList(data, productBlock, rows, currentPage);
-  SetupPagination(data, pagination_element, rows);
-  return data;
-}
 
 fetch("./products.json")
   .then(function (resp) {
     return resp.json();
   })
-  .then((d) => {
-    allData = d;
-    currentData = d;
+  .then((data) => {
+    allData = data;
+    currentData = data;
     disp(currentData);
   });
-
+  
 function FilterSize(size) {
   currentData = allData.filter(function (element) {
     return element.size == size;
   });
 }
 
-document.getElementById("size").onchange = function (ev) {
-  let size = ev.target.value;
-
-  // console.log(this);
-  FilterSize(size);
-  disp(currentData);
+document.getElementById("size").onchange = function () {
+  let size = event.target.value;
+  if (size == "-1"){
+    disp(allData);
+  }
+  else{
+    FilterSize(size);
+    disp(currentData);
+  }
 };
+
+function disp(data) {
+    DisplayList(data, productBlock, rows, currentPage);
+    SetupPagination(data, pagination_element, rows);
+    return data;
+}
 
 const productBlock = document.getElementById("product_block");
 const pagination_element = document.getElementById("pagination");

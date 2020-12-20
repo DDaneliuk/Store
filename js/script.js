@@ -13,6 +13,8 @@ fetch("./products.json")
   
 function FilterSize(size) {
   currentData = allData.filter(function (element) {
+    element.size == size;
+    currentPage = 1;
     return element.size == size;
   });
 }
@@ -20,13 +22,17 @@ function FilterSize(size) {
 document.getElementById("size").onchange = function () {
   let size = event.target.value;
   if (size == "-1"){
+    currentData = allData
     disp(allData);
+    console.log(currentPage);
   }
   else{
     FilterSize(size);
     disp(currentData);
+    console.log(currentPage);
   }
 };
+
 
 function disp(data) {
     DisplayList(data, productBlock, rows, currentPage);
@@ -39,7 +45,6 @@ const pagination_element = document.getElementById("pagination");
 
 let currentPage = 1;
 let rows = 6;
-
 function DisplayList(data, productBlock, rows, currentPage) {
   productBlock.innerHTML = "";
   currentPage--;

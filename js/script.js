@@ -10,7 +10,7 @@ fetch("./products.json")
     currentData = data;
     disp(currentData);
   });
-  
+
 function FilterSize(size) {
   currentData = allData.filter(function (element) {
     element.size == size;
@@ -18,26 +18,26 @@ function FilterSize(size) {
     return element.size == size;
   });
 }
-
+// add size tag after choose
+let tagSize = document.getElementById("tagSize");
+tagSize.innerHTML = "all sizes";
 document.getElementById("size").onchange = function () {
   let size = event.target.value;
-  if (size == "-1"){
-    currentData = allData
+  if (size == "-1") {
+    currentData = allData;
     disp(allData);
-    console.log(currentPage);
-  }
-  else{
+    tagSize.innerHTML = "All sizes";
+  } else {
     FilterSize(size);
     disp(currentData);
-    console.log(currentPage);
+    tagSize.innerHTML = "size:" + size;
   }
 };
 
-
 function disp(data) {
-    DisplayList(data, productBlock, rows, currentPage);
-    SetupPagination(data, pagination_element, rows);
-    return data;
+  DisplayList(data, productBlock, rows, currentPage);
+  SetupPagination(data, pagination_element, rows);
+  return data;
 }
 
 const productBlock = document.getElementById("product_block");

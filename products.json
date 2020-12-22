@@ -1,86 +1,86 @@
 [{
     "name":"RESPONSE SUPER SHOES",
     "size":"10",
-    "color":"Black",
+    "color":"black",
     "price":"90",
     "image":"assets/images/products/black1.jpg"
 },{  
     "name":"ULTRABOOST DNA SHOES",
     "size":"11",
-    "color":"Black",
+    "color":"black",
     "price":"180",
     "image":"assets/images/products/black2.jpg"
 },{  
     "name":"SUPERNOVA SHOES",
     "size":"9",
-    "color":"Black",
+    "color":"black",
     "price":"100",
     "image":"assets/images/products/black3.jpg"
 },{  
     "name":"KANSAS JAYHAWKS ULTRABOOST 1.0 DNA SHOES",
     "size":"8",
-    "color":"Blue",
+    "color":"blue",
     "price":"153",
     "image":"assets/images/products/blue1.jpg"
 },{  
     "name":"ULTRABOOST DNA SHOES",
     "size":"8",
-    "color":"Brown",
+    "color":"brown",
     "price":"200",
     "image":"assets/images/products/brown1.jpg"
 },{  
     "name":"ULTRABOOST 20 SHOES",
     "size":"9",
-    "color":"Green",
+    "color":"green",
     "price":"180",
     "image":"assets/images/products/green1.jpg"
 },{  
     "name":"ULTRABOOST 2.0 DNA X PE SHOES",
     "size":"10",
-    "color":"Green",
+    "color":"green",
     "price":"199",
     "image":"assets/images/products/green2.jpg"
 },{  
     "name":"NITE JOGGER SHOES",
     "size":"11",
-    "color":"Green",
+    "color":"green",
     "price":"104",
     "image":"assets/images/products/green3.jpg"
 },{  
     "name":"D ROSE 11 SHOES",
     "size":"8",
-    "color":"Green",
+    "color":"green",
     "price":"354",
     "image":"assets/images/products/green4.jpg"
 },{  
     "name":"DAILY 3.0 SHOES",
     "size":"9",
-    "color":"Grey",
+    "color":"grey",
     "price":"400",
     "image":"assets/images/products/grey1.jpg"
 },{  
     "name":"NITE JOGGER SHOES",
     "size":"10",
-    "color":"Grey",
+    "color":"grey",
     "price":"275",
     "image":"assets/images/products/grey2.jpg"
 },{  
     "name":"OZWEEGO SHOES",
     "size":"11",
-    "color":"Orange",
+    "color":"orange",
     "price":"140",
     "image":"assets/images/products/orange1.jpg"
 },
 {  
     "name":"ULTRABOOST 20 SHOES",
     "size":"8",
-    "color":"Orange",
+    "color":"orange",
     "price":"180",
     "image":"assets/images/products/orange2.jpg"
 },{  
     "name":"D ROSE 11 BRENDA SHOES",
     "size":"9",
-    "color":"Red",
+    "color":"red",
     "price":"220",
     "image":"assets/images/products/red1.jpg"
 }]

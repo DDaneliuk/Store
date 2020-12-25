@@ -33,6 +33,36 @@ document.getElementById("size").onchange = function () {
     tagSize.innerHTML = "size:" + size;
   }
 };
+// add filter color
+const colorBtn = document.querySelectorAll("input[type=checkbox]");
+for (const button of colorBtn) {
+  button.addEventListener("click", function (event) {
+    var get = event.target.value;
+    var color = document.getElementById(get);
+    if (color.checked) {
+      console.log("ok - checked");
+      console.log(color);
+      FilterColor(color.value);
+      disp(currentData);
+      console.log(currentData);
+    }
+    console.log(event.target.value);
+  });
+}
+
+function FilterColor(color) {
+  currentData = allData.filter(function (element) {
+    element.color == color;
+    return element.color == color;
+  });
+}
+//add filter price
+const priceSlider = document.getElementById("slider").value;
+console.log(priceSlider);
+document.getElementById("slider").onchange = function () {
+  let priceSlider = event.target.value;
+  console.log(priceSlider);
+};
 
 function disp(data) {
   DisplayList(data, productBlock, rows, currentPage);

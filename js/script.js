@@ -1,5 +1,9 @@
 let allData;
+let currentColorData;
+let currentSizeData;
+let currentPriceData;
 let currentData;
+let changedData;
 
 fetch("./products.json")
   .then(function (resp) {
@@ -11,16 +15,16 @@ fetch("./products.json")
     disp(currentData);
   });
 
+// add size tag after choose
 function FilterSize(size) {
-  currentData = allData.filter(function (element) {
+  currentColorData = allData.filter(function (element) {
     element.size == size;
     currentPage = 1;
     return element.size == size;
   });
 }
-// add size tag after choose
 let tagSize = document.getElementById("tagSize");
-tagSize.innerHTML = "all sizes";
+tagSize.innerHTML = "size: all";
 document.getElementById("size").onchange = function () {
   let size = event.target.value;
   if (size == "-1") {
@@ -29,41 +33,55 @@ document.getElementById("size").onchange = function () {
     tagSize.innerHTML = "All sizes";
   } else {
     FilterSize(size);
-    disp(currentData);
+    disp(currentColorData);
     tagSize.innerHTML = "size:" + size;
   }
 };
 // add filter color
 const colorBtn = document.querySelectorAll("input[type=checkbox]");
+let ar = [];
+let x;
 for (const button of colorBtn) {
   button.addEventListener("click", function (event) {
     var get = event.target.value;
     var color = document.getElementById(get);
     if (color.checked) {
-      console.log("ok - checked");
-      console.log(color);
       FilterColor(color.value);
-      disp(currentData);
-      console.log(currentData);
+      console.log(currentColorData);
+      x = ar.concat(currentColorData);
+      console.log(x);
+      disp(x);
+    } else {
+      disp(allData);
     }
-    console.log(event.target.value);
   });
 }
-
 function FilterColor(color) {
-  currentData = allData.filter(function (element) {
-    element.color == color;
+  currentColorData = allData.filter(function (element) {
     return element.color == color;
   });
 }
 //add filter price
-const priceSlider = document.getElementById("slider").value;
-console.log(priceSlider);
-document.getElementById("slider").onchange = function () {
+const tagPrice = document.getElementById("tagPrice");
+tagPrice.innerText = "price: all";
+let slider = document.getElementById("slider");
+slider.addEventListener("input", showSliderValue);
+function showSliderValue() {
   let priceSlider = event.target.value;
+  tagPrice.innerText = "price < " + "$" + priceSlider;
   console.log(priceSlider);
-};
-
+  FilterPrice(priceSlider);
+  disp(currentData);
+  console.log(currentData);
+}
+function FilterPrice(price) {
+  currentData = allData.filter(function (element) {
+    let elprice = Number(element.price);
+    elprice == price;
+    console.log(typeof elprice);
+    return elprice <= price;
+  });
+}
 function disp(data) {
   DisplayList(data, productBlock, rows, currentPage);
   SetupPagination(data, pagination_element, rows);

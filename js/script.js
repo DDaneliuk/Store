@@ -39,28 +39,34 @@ document.getElementById("size").onchange = function () {
 };
 // add filter color
 const colorBtn = document.querySelectorAll("input[type=checkbox]");
-let ar = [];
-let x;
+console.log(colorBtn);
+let colorArr = [];
+let arr = [];
 for (const button of colorBtn) {
   button.addEventListener("click", function (event) {
     var get = event.target.value;
     var color = document.getElementById(get);
     if (color.checked) {
-      FilterColor(color.value);
-      console.log(currentColorData);
-      x = ar.concat(currentColorData);
-      console.log(x);
-      disp(x);
+      colorArr.push(color.value);
+      FilterColor(colorArr);
+      console.log(colorArr);
+
+      disp(arr);
     } else {
       disp(allData);
     }
   });
 }
-function FilterColor(color) {
-  currentColorData = allData.filter(function (element) {
-    return element.color == color;
-  });
-}
+// function FilterColor(color) {
+//   currentColorData = allData.filter(function (element) {
+//     console.log(color);
+//     for (let i = 0; i < color.length; i++) {
+//       var elementColor = element.color == color[i];
+//     }
+//     console.log(elementColor);
+//     return elementColor;
+//   });
+// }
 //add filter price
 const tagPrice = document.getElementById("tagPrice");
 tagPrice.innerText = "price: all";

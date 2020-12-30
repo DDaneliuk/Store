@@ -1,31 +1,18 @@
-// document.querySelectorAll("input[type=checkbox]").onclick = function (el) {
-//   var fill = el.value;
-//   console.log(fill);
+function FilterColor(color) {
+  arr = [];
+  currentColorData = allData.map(function (item, index) {
+    if (color.includes(item.color)) {
+      arr.push(item);
+    }
+  });
+  console.log(arr);
+  return arr;
+}
 
-//   var empty = [].filter.call(textinputs, function (el) {
-//     console.log(el.checked);
-//     return el.checked;
-//   });
-// };
-// const colorBtn = document.querySelectorAll("input[type=checkbox]");
-// for (const button of colorBtn) {
-//   button.addEventListener("click", function (event) {
-//     var get = event.target.value;
-//     var color = document.getElementById(get);
-//     if (color.checked) {
-//       console.log("ok - checked");
-//       console.log(color);
-//       FilterColor(color.value);
-//       disp(currentData);
-//       console.log(currentData);
-//     }
-//     console.log(event.target.value);
-//   });
-// }
-
-// function FilterColor(color) {
-//   currentData = allData.filter(function (element) {
-//     element.color == color;
-//     return element.color == color;
-//   });
-// }
+// let listCurFilt = ["b", "r"];
+// let items = [
+//   {name: "1", color: "g"},
+//   {name: "2", color: "r"},
+//   {name: "3", color: "b"},
+//   {name: "4", color: "g"},
+// ];

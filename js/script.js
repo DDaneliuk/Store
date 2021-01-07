@@ -1,9 +1,20 @@
+// mobile menu - burder
+function ShowMenu() {
+  document.getElementById("hideMenu").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+// show card
+function ShowCard() {
+  document.getElementById();
+}
 let allData;
 let currentColorData;
 let currentSizeData;
 let currentPriceData;
 let currentData;
 let changedData;
+let choosedData;
+let choosed;
 
 fetch("./products.json")
   .then(function (resp) {
@@ -17,7 +28,7 @@ fetch("./products.json")
 
 // add size tag after choose
 function FilterSize(size) {
-  currentColorData = allData.filter(function (element) {
+  choosedData = allData.filter(function (element) {
     element.size == size;
     currentPage = 1;
     return element.size == size;
@@ -25,6 +36,7 @@ function FilterSize(size) {
 }
 let tagSize = document.getElementById("tagSize");
 tagSize.innerHTML = "size: all";
+
 document.getElementById("size").onchange = function () {
   let size = event.target.value;
   if (size == "-1") {
@@ -33,41 +45,46 @@ document.getElementById("size").onchange = function () {
     tagSize.innerHTML = "All sizes";
   } else {
     FilterSize(size);
-    disp(currentColorData);
+    disp(choosedData);
     tagSize.innerHTML = "size:" + size;
   }
 };
 // add filter color
 const colorBtn = document.querySelectorAll("input[type=checkbox]");
 console.log(colorBtn);
-let colorArr = [];
-let arr = [];
+let colorArrValue = [];
+let colorData = [];
 for (const button of colorBtn) {
   button.addEventListener("click", function (event) {
     var get = event.target.value;
     var color = document.getElementById(get);
     if (color.checked) {
-      colorArr.push(color.value);
-      FilterColor(colorArr);
-      console.log(colorArr);
-
-      disp(arr);
+      colorArrValue.push(color.value);
+      FilterColor(colorArrValue);
+      disp(colorData);
     } else {
       disp(allData);
     }
   });
 }
-// function FilterColor(color) {
-//   currentColorData = allData.filter(function (element) {
-//     console.log(color);
-//     for (let i = 0; i < color.length; i++) {
-//       var elementColor = element.color == color[i];
-//     }
-//     console.log(elementColor);
-//     return elementColor;
-//   });
-// }
-//add filter price
+function FilterColor(color) {
+  colorData = [];
+  if (choosedData === undefined) {
+    currentColorData = allData.map(function (item) {
+      if (color.includes(item.color)) {
+        colorData.push(item);
+      }
+    });
+    return colorData;
+  }
+  currentColorData = choosedData.map(function (item) {
+    if (color.includes(item.color)) {
+      colorData.push(item);
+    }
+  });
+  return colorData;
+}
+
 const tagPrice = document.getElementById("tagPrice");
 tagPrice.innerText = "price: all";
 let slider = document.getElementById("slider");
@@ -75,16 +92,13 @@ slider.addEventListener("input", showSliderValue);
 function showSliderValue() {
   let priceSlider = event.target.value;
   tagPrice.innerText = "price < " + "$" + priceSlider;
-  console.log(priceSlider);
   FilterPrice(priceSlider);
-  disp(currentData);
-  console.log(currentData);
+  disp(currentPriceData);
 }
 function FilterPrice(price) {
-  currentData = allData.filter(function (element) {
+  currentPriceData = allData.filter(function (element) {
     let elprice = Number(element.price);
     elprice == price;
-    console.log(typeof elprice);
     return elprice <= price;
   });
 }

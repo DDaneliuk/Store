@@ -14,6 +14,7 @@ let currentPriceData;
 let currentData;
 let changedData;
 let choosedData;
+let choosedDataClone = [];
 let choosed;
 
 fetch("./products.json")
@@ -28,19 +29,26 @@ fetch("./products.json")
 
 // add size tag after choose
 function FilterSize(size) {
-  choosedData = allData.filter(function (element) {
-    element.size == size;
-    currentPage = 1;
-    return element.size == size;
-  });
+  if (choosedData == undefined) {
+    choosedData = allData.filter(function (element) {
+      element.size == size;
+      currentPage = 1;
+      return element.size == size;
+    });
+  } else {
+    choosedData = choosedData.filter(function (element) {
+      element.size == size;
+      currentPage = 1;
+      return element.size == size;
+    });
+  }
 }
 let tagSize = document.getElementById("tagSize");
 tagSize.innerHTML = "size: all";
-
+let size;
 document.getElementById("size").onchange = function () {
-  let size = event.target.value;
+  size = event.target.value;
   if (size == "-1") {
-    currentData = allData;
     disp(allData);
     tagSize.innerHTML = "All sizes";
   } else {
@@ -60,29 +68,38 @@ for (const button of colorBtn) {
     var color = document.getElementById(get);
     if (color.checked) {
       colorArrValue.push(color.value);
-      FilterColor(colorArrValue);
-      disp(colorData);
+      FilterColor(colorArrValue, size);
+      disp(choosedData);
     } else {
       disp(allData);
     }
   });
 }
-function FilterColor(color) {
-  colorData = [];
-  if (choosedData === undefined) {
-    currentColorData = allData.map(function (item) {
+let arr = [];
+function FilterColor(color, size) {
+  if (choosedData == undefined) {
+    choosedData = allData.map(function (item) {
       if (color.includes(item.color)) {
-        colorData.push(item);
+        arr.push(item);
       }
     });
-    return colorData;
+    return choosedData;
+  } else {
+    currentColorData = choosedData.map(function (item) {
+      if (color.includes(item.color)) {
+        arr.push(item);
+      }
+      choosedData.map(function (item) {
+        console.log(choosedData);
+        if (size == undefined) {
+          return console.log(item.color == color);
+        } else {
+          return item.color == color, item.size == size;
+        }
+      });
+    });
+    return choosedData;
   }
-  currentColorData = choosedData.map(function (item) {
-    if (color.includes(item.color)) {
-      colorData.push(item);
-    }
-  });
-  return colorData;
 }
 
 const tagPrice = document.getElementById("tagPrice");
@@ -93,14 +110,22 @@ function showSliderValue() {
   let priceSlider = event.target.value;
   tagPrice.innerText = "price < " + "$" + priceSlider;
   FilterPrice(priceSlider);
-  disp(currentPriceData);
+  disp(choosedData);
 }
 function FilterPrice(price) {
-  currentPriceData = allData.filter(function (element) {
-    let elprice = Number(element.price);
-    elprice == price;
-    return elprice <= price;
-  });
+  if (choosedData == undefined) {
+    choosedData = allData.filter(function (element) {
+      let elprice = Number(element.price);
+      elprice == price;
+      return elprice <= price;
+    });
+  } else {
+    choosedData = choosedData.filter(function (element) {
+      let elprice = Number(element.price);
+      elprice == price;
+      return elprice <= price;
+    });
+  }
 }
 function disp(data) {
   DisplayList(data, productBlock, rows, currentPage);

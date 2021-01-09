@@ -75,32 +75,72 @@ for (const button of colorBtn) {
     }
   });
 }
-let arr = [];
+let TempArray = [];
 function FilterColor(color, size) {
   if (choosedData == undefined) {
-    choosedData = allData.map(function (item) {
+    choosedData = [];
+    ColorData = allData.map(function (item) {
       if (color.includes(item.color)) {
-        arr.push(item);
+        choosedData.push(item);
       }
     });
-    return choosedData;
   } else {
-    currentColorData = choosedData.map(function (item) {
-      if (color.includes(item.color)) {
-        arr.push(item);
-      }
-      choosedData.map(function (item) {
-        console.log(choosedData);
-        if (size == undefined) {
-          return console.log(item.color == color);
-        } else {
-          return item.color == color, item.size == size;
+    TempArray = [];
+    ColorData = allData.map(function (item) {
+      if (size == undefined) {
+        if (color.includes(item.color)) {
+          TempArray.push(item);
+          choosedData = TempArray;
+          console.log(item);
         }
-      });
+      } else {
+        if (color.includes(item.color) && size.includes(item.size)) {
+          TempArray.push(item);
+          choosedData = TempArray;
+          console.log(item);
+        }
+      }
     });
-    return choosedData;
   }
+  // choosedData = choosedData.filter(function (element) {
+  //       let elprice = Number(element.price);
+  //       elprice == price;
+  //       return elprice <= price;
+  //     });
+
+  // let data = choosedData.map(function (item) {
+  //   if (!color.includes(item.color) && !size.includes(item.size)) {
+  //   }
+  // });
+  return choosedData;
 }
+// let arr = [];
+// function FilterColor(color, size) {
+//   if (choosedData == undefined) {
+//     choosedData = [];
+//     choosedData = allData.map(function (item) {
+//       if (color.includes(item.color)) {
+//         choosedData.push(item);
+//       }
+//     });
+//     return choosedData;
+//   } else {
+//     currentColorData = choosedData.map(function (item) {
+//       if (color.includes(item.color)) {
+//         choosedData.push(item);
+//       }
+//       choosedData.map(function (item) {
+//         console.log(choosedData);
+//         if (size == undefined) {
+//           return console.log(item.color == color);
+//         } else {
+//           return item.color == color, item.size == size;
+//         }
+//       });
+//     });
+//     return choosedData;
+//   }
+// }
 
 const tagPrice = document.getElementById("tagPrice");
 tagPrice.innerText = "price: all";

@@ -49,9 +49,21 @@ function FilterSize(size, color, price) {
           choosedData = TempArray;
           return choosedData;
         }
-      } else {
+      }
+      if (color.length == 0) {
         itemPrice = Number(price);
         if (size.includes(item.size) && item.price <= itemPrice) {
+          TempArray.push(item);
+          choosedData = TempArray;
+          return choosedData;
+        }
+      } else {
+        itemPrice = Number(price);
+        if (
+          size.includes(item.size) &&
+          item.price <= itemPrice &&
+          color.includes(item.color)
+        ) {
           console.log(item);
           TempArray.push(item);
           choosedData = TempArray;
@@ -95,8 +107,7 @@ for (const button of colorBtn) {
   });
 }
 let TempArray = [];
-function FilterColor(size, color) {
-  TempArray = [];
+function FilterColor(size, color, price) {
   currentPage = 1;
   if (choosedData == undefined) {
     choosedData = [];
@@ -106,15 +117,39 @@ function FilterColor(size, color) {
       }
     });
   } else {
-    ColorData = allData.map(function (item) {
-      if (size == undefined) {
+    console.log(size);
+    console.log(price);
+    TempArray = [];
+    ColorData = allData.filter(function (item) {
+      if (size == undefined && price == undefined) {
         if (color.includes(item.color)) {
           TempArray.push(item);
           choosedData = TempArray;
           console.log(item);
         }
-      } else {
+      }
+      if (size == undefined) {
+        itemPrice = Number(price);
+        if (color.includes(item.color) && item.price <= itemPrice) {
+          TempArray.push(item);
+          choosedData = TempArray;
+          console.log(item);
+        }
+      }
+      if (price == undefined) {
         if (color.includes(item.color) && size.includes(item.size)) {
+          console.log(item.color);
+          TempArray.push(item);
+          choosedData = TempArray;
+          console.log(item);
+        }
+      } else {
+        itemPrice = Number(price);
+        if (
+          color.includes(item.color) &&
+          size.includes(item.size) &&
+          item.price <= itemPrice
+        ) {
           TempArray.push(item);
           choosedData = TempArray;
           console.log(item);
@@ -137,31 +172,38 @@ function showSliderValue() {
   disp(choosedData);
 }
 function FilterPrice(size, color, price) {
-  if (choosedData == undefined) {
-    choosedData = allData.filter(function (element) {
-      let elprice = Number(element.price);
-      elprice == price;
-      return elprice <= price;
-    });
-  } else {
-    TempArray = [];
+  TempArray = [];
+  itemPrice = Number(price);
+  choosedData = allData.filter(function (item) {
     if (size == undefined && color.length == 0) {
-      choosedData = allData.filter(function (element) {
-        let elprice = Number(element.price);
-        elprice == price;
-        return elprice <= price;
-      });
+      let elprice = Number(item.price);
+      return elprice <= price;
     }
     if (color.length == 0) {
-      if (size.includes(item.size) && item.price <= itemPrice){
-        choosedData = allData.filter(function (element) {
-          let elprice = Number(element.price);
-          elprice == price;
-          return elprice <= price;
-        }
-        });
+      if (size.includes(item.size) && item.price <= itemPrice) {
+        TempArray.push(item);
+        choosedData = TempArray;
+        return choosedData;
+      }
     }
-  }
+    if (size == undefined) {
+      if (color.includes(item.color) && item.price <= itemPrice) {
+        TempArray.push(item);
+        choosedData = TempArray;
+        return choosedData;
+      }
+    } else {
+      if (
+        color.includes(item.color) &&
+        item.price <= itemPrice &&
+        size.includes(item.size)
+      ) {
+        TempArray.push(item);
+        choosedData = TempArray;
+        return choosedData;
+      }
+    }
+  });
 }
 function disp(data) {
   DisplayList(data, productBlock, rows, currentPage);

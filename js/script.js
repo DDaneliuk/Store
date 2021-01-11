@@ -89,6 +89,9 @@ document.getElementById("size").onchange = function () {
     currentPage = 1;
   }
 };
+// add colors tag
+let tagColor = document.getElementById("tagColor");
+tagColor.innerHTML = "color: all";
 // add filter color
 const colorBtn = document.querySelectorAll("input[type=checkbox]");
 let colorArrValue = [];
@@ -99,6 +102,7 @@ for (const button of colorBtn) {
     var color = document.getElementById(get);
     if (color.checked) {
       colorArrValue.push(color.value);
+      tagColor.innerHTML = "color: " + colorArrValue.join(", ");
       console.log(colorArrValue);
       FilterColor(size, colorArrValue, priceSlider);
       disp(choosedData);
@@ -109,7 +113,7 @@ for (const button of colorBtn) {
       if (indexColor > -1) {
         colorArrValue.splice(indexColor, 1);
       }
-      console.log(colorArrValue);
+      tagColor.innerHTML = "color: " + colorArrValue.join(", ");
       FilterColor(size, colorArrValue, priceSlider);
       disp(choosedData);
     }

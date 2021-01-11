@@ -137,7 +137,7 @@ function FilterColor(size, color, price) {
         }
       }
       if (price == undefined) {
-        if (color.includes(item.color) && size.includes(item.size)) {
+        if (color.includes(item.color) && size == item.size) {
           console.log(item.color);
           TempArray.push(item);
           choosedData = TempArray;

@@ -99,9 +99,18 @@ for (const button of colorBtn) {
     var color = document.getElementById(get);
     if (color.checked) {
       colorArrValue.push(color.value);
+      console.log(colorArrValue);
       FilterColor(size, colorArrValue, priceSlider);
       disp(choosedData);
-    } else {
+    }
+    if (!color.checked) {
+      console.log(color.value);
+      const indexColor = colorArrValue.indexOf(color.value);
+      if (indexColor > -1) {
+        colorArrValue.splice(indexColor, 1);
+      }
+      console.log(colorArrValue);
+      FilterColor(size, colorArrValue, priceSlider);
       disp(choosedData);
     }
   });
@@ -117,15 +126,12 @@ function FilterColor(size, color, price) {
       }
     });
   } else {
-    console.log(size);
-    console.log(price);
     TempArray = [];
     ColorData = allData.filter(function (item) {
       if (size == undefined && price == undefined) {
         if (color.includes(item.color)) {
           TempArray.push(item);
           choosedData = TempArray;
-          console.log(item);
         }
       }
       if (size == undefined) {

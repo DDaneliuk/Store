@@ -179,7 +179,14 @@ function showSliderValue() {
   priceSlider = event.target.value;
   tagPrice.innerText = "price < " + "$" + priceSlider;
   FilterPrice(size, colorArrValue, priceSlider);
-  disp(choosedData);
+  if (choosedData.length == 0) {
+    choosedData = [];
+    EmptyData();
+    disp(choosedData);
+  } else {
+    productBlock.className = "product_block";
+    disp(choosedData);
+  }
 }
 function FilterPrice(size, color, price) {
   TempArray = [];
@@ -215,13 +222,21 @@ function FilterPrice(size, color, price) {
     }
   });
 }
+function EmptyData() {
+  console.log("empty");
+  productBlock.className = "product_block";
+  let h3 = document.createElement("h3");
+  h3.innerHTML = "Sorry";
+  console.log(h3);
+  productBlock.appendChild(h3);
+}
 function disp(data) {
   DisplayList(data, productBlock, rows, currentPage);
   SetupPagination(data, pagination_element, rows);
   return data;
 }
 
-const productBlock = document.getElementById("product_block");
+let productBlock = document.getElementById("product_block");
 const pagination_element = document.getElementById("pagination");
 
 let currentPage = 1;

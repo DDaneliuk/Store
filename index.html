@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="container">
             <!-- Header Block -->            
             <header>
                 <div class="logo">
@@ -24,8 +24,9 @@
                     <input type="text" placeholder="search">
                 </div>
                 <div class="menu">
-                    <div class="hideMenu">
+                    <div class="hideMenu" id="hideMenu">
                         <ul >
+                            <li ><a style = "display:none"href="javascript:void(0)" class="closebtn" id="closebtn" onclick="closeNav()">&times;</a><li>
                             <li><a href="#">Home</a></li>
                             <li><a href="#">About</a></li>
                             <li><a href="#">Catalog</a></li>
@@ -36,7 +37,7 @@
                         <!-- Search -->
                         <div><img class="hideIcon" style="width: 27px;" src="assets/images/Logo/search.png"></div>
                         <!-- Card -->
-                        <div><svg viewBox="0 0 32 32"><path d="M12 7V6c0-1 1-2 2-2h4c1 0 2 1 2 2v1h7v19H5V7h7zm14 1H6v17h20V8zM13 6v1h6V6c0-.5-.5-1-1-1h-4a1 1 0 0 0-1 1z"></path></svg></div>
+                        <div onclick="ShowCard()"><svg viewBox="0 0 32 32"><path d="M12 7V6c0-1 1-2 2-2h4c1 0 2 1 2 2v1h7v19H5V7h7zm14 1H6v17h20V8zM13 6v1h6V6c0-.5-.5-1-1-1h-4a1 1 0 0 0-1 1z"></path></svg></div>
                         <!-- Burger -->
                         <div onclick="ShowMenu()"><img class="hideIcon" style="width: 33px;" src="assets/images/Logo/hamburger.png"></div>
                     </div>
@@ -47,7 +48,7 @@
                 </div>
             </header>
             <!-- Breadcrumb navigation block --> 
-            <div class="main">
+            <div class="main" id="main">
                 <div class="crumb">
                     <ul class="breadcrumb">
                         <li><a href="#">Home</a></li>

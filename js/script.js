@@ -1,11 +1,29 @@
 // mobile menu - burder
 function ShowMenu() {
+  console.log("ok");
   document.getElementById("hideMenu").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("container").style.marginRight = "250px";
+  document.getElementById("container").style.marginLeft = "-250px";
+  document.getElementById("closebtn").style.display = "block";
 }
-// show card
+function closeNav() {
+  document.getElementById("hideMenu").style.width = "0";
+  document.getElementById("container").style.marginLeft = "0";
+  document.getElementById("container").style.marginRight = "0";
+  document.getElementById("closebtn").style.display = "none";
+}
 function ShowCard() {
-  document.getElementById();
+  console.log("ok");
+  document.getElementById("hideMenu").style.width = "250px";
+  document.getElementById("container").style.marginRight = "250px";
+  document.getElementById("container").style.marginLeft = "-250px";
+  document.getElementById("closebtn").style.display = "block";
+}
+function closeCard() {
+  document.getElementById("hideMenu").style.width = "0";
+  document.getElementById("container").style.marginLeft = "0";
+  document.getElementById("container").style.marginRight = "0";
+  document.getElementById("closebtn").style.display = "none";
 }
 let allData;
 let currentColorData;

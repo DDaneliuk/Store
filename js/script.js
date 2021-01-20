@@ -1,30 +1,42 @@
 // mobile menu - burder
+let card = document.getElementById("card");
+let menu = document.getElementById("hideMenu");
+let closeBtn = document.getElementById("closebtn");
+let closeBtnCard = document.getElementById("closebtncard");
+let mainBlock = document.getElementById("container");
 function ShowMenu() {
   console.log("ok");
-  document.getElementById("hideMenu").style.width = "250px";
-  document.getElementById("container").style.marginRight = "250px";
-  document.getElementById("container").style.marginLeft = "-250px";
-  document.getElementById("closebtn").style.display = "block";
+  menu.style.width = "250px";
+  mainBlock.style.marginRight = "250px";
+  mainBlock.style.marginLeft = "-250px";
+  mainBlock.style.position = "fixed";
+  closeBtn.style.display = "block";
 }
 function closeNav() {
-  document.getElementById("hideMenu").style.width = "0";
-  document.getElementById("container").style.marginLeft = "0";
-  document.getElementById("container").style.marginRight = "0";
-  document.getElementById("closebtn").style.display = "none";
+  menu.style.width = "0";
+  mainBlock.style.marginLeft = "0";
+  mainBlock.style.marginRight = "0";
+  mainBlock.style.position = "relative";
+  closeBtn.style.display = "none";
 }
 function ShowCard() {
   console.log("ok");
-  document.getElementById("hideMenu").style.width = "250px";
-  document.getElementById("container").style.marginRight = "250px";
-  document.getElementById("container").style.marginLeft = "-250px";
-  document.getElementById("closebtn").style.display = "block";
+  card.style.width = "350px";
+  card.style.padding = "50px 30px 50px 30px";
+  mainBlock.style.marginRight = "350px";
+  mainBlock.style.marginLeft = "-350px";
+  mainBlock.style.position = "fixed";
+  closeBtnCard.style.display = "block";
 }
 function closeCard() {
-  document.getElementById("hideMenu").style.width = "0";
-  document.getElementById("container").style.marginLeft = "0";
-  document.getElementById("container").style.marginRight = "0";
-  document.getElementById("closebtn").style.display = "none";
+  card.style.width = "0";
+  card.style.padding = "0";
+  mainBlock.style.marginRight = "0";
+  mainBlock.style.marginLeft = "0";
+  mainBlock.style.position = "relative";
+  closeBtnCard.style.display = "block";
 }
+
 let allData;
 let currentColorData;
 let currentSizeData;
@@ -349,6 +361,49 @@ function PaginationButton(page, data) {
 
     button.classList.add("activePage");
   });
-
   return button;
 }
+let bagData = [];
+window.onload = function () {
+  const buyBtn = document.querySelectorAll(".product_buy");
+  console.log(buyBtn);
+  buyBtn.forEach(function (btn) {
+    btn.addEventListener("click", function (event) {
+      // console.log(
+      //   event.target.parentElement.previousSibling.firstElementChild.src
+      // );
+      const item = {};
+      let name = event.target.parentElement.firstElementChild.textContent;
+      item.name = name;
+
+      let price = event.target.parentElement.children[2].textContent;
+      item.price = price;
+
+      let fullPath =
+        event.target.parentElement.previousSibling.firstElementChild.src;
+      let pos = fullPath.indexOf("assets");
+      let partPath = fullPath.slice(pos);
+      item.image = partPath;
+      console.log(item);
+      bagData.push(item);
+      bagData.forEach((element) => {
+        const newProduct = document.createElement("div");
+        // newProduct.className = "product";
+        card.appendChild(newProduct);
+
+        const newProductName = document.createElement("p"); //add name of product
+        newProductName.innerHTML = element.name;
+        newProduct.appendChild(newProductName);
+
+        const newImageTag = document.createElement("img"); //add img tag to Image block
+        card.appendChild(newImageTag);
+
+        const newImageAttrubute = document.createAttribute("src"); //add img to Tag
+        newImageTag.setAttribute("src", element.image);
+        const newProductPrice = document.createElement("p"); //add price of product
+        newProductPrice.innerHTML = element.price;
+        newProduct.appendChild(newProductPrice);
+      });
+    });
+  });
+};

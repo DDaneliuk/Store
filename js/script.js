@@ -53,7 +53,7 @@ fetch("./products.json")
   .then((data) => {
     allData = data;
     currentData = data;
-    disp(currentData);
+    disp(currentData, cartProducts);
   });
 
 // add size tag after choose
@@ -261,7 +261,7 @@ function EmptyData() {
   productBlock.appendChild(h3);
 }
 function disp(data) {
-  DisplayList(data, productBlock, rows, currentPage);
+  DisplayList(data, productBlock, rows, currentPage, cartProducts);
   SetupPagination(data, pagination_element, rows);
   return data;
 }
@@ -271,7 +271,7 @@ const pagination_element = document.getElementById("pagination");
 
 let currentPage = 1;
 let rows = 6;
-function DisplayList(data, productBlock, rows, currentPage) {
+function DisplayList(data, productBlock, rows, currentPage, callback) {
   productBlock.innerHTML = "";
   currentPage--;
 
@@ -333,6 +333,7 @@ function DisplayList(data, productBlock, rows, currentPage) {
     newButton.textContent = "Order now";
     newProductInfo.appendChild(newButton);
   });
+  cartProducts();
 }
 
 function SetupPagination(data, productBlock, rows) {
@@ -364,14 +365,11 @@ function PaginationButton(page, data) {
   return button;
 }
 let bagData = [];
-window.onload = function () {
-  const buyBtn = document.querySelectorAll(".product_buy");
+function cartProducts() {
+  let buyBtn = document.querySelectorAll(".product_buy");
   console.log(buyBtn);
   buyBtn.forEach(function (btn) {
     btn.addEventListener("click", function (event) {
-      // console.log(
-      //   event.target.parentElement.previousSibling.firstElementChild.src
-      // );
       const item = {};
       let name = event.target.parentElement.firstElementChild.textContent;
       item.name = name;
@@ -388,22 +386,29 @@ window.onload = function () {
       bagData.push(item);
       bagData.forEach((element) => {
         const newProduct = document.createElement("div");
-        // newProduct.className = "product";
+        newProduct.className = "bag_product";
         card.appendChild(newProduct);
+
+        const newImageTag = document.createElement("img");
+        newImageTag.className = "item_bag_photo"; //add img tag to Image block
+        newProduct.appendChild(newImageTag);
+        const newImageAttrubute = document.createAttribute("src"); //add img to Tag
+        newImageTag.setAttribute("src", element.image);
+
+        const newProductText = document.createElement("div");
+        newProductText.className = "bag_text";
+        newProduct.appendChild(newProductText);
 
         const newProductName = document.createElement("p"); //add name of product
         newProductName.innerHTML = element.name;
-        newProduct.appendChild(newProductName);
+        newProductText.appendChild(newProductName);
 
-        const newImageTag = document.createElement("img"); //add img tag to Image block
-        card.appendChild(newImageTag);
-
-        const newImageAttrubute = document.createAttribute("src"); //add img to Tag
-        newImageTag.setAttribute("src", element.image);
         const newProductPrice = document.createElement("p"); //add price of product
         newProductPrice.innerHTML = element.price;
-        newProduct.appendChild(newProductPrice);
+        newProductText.appendChild(newProductPrice);
+
+        // const itemCart = document.createElement("");
       });
     });
   });
-};
+}

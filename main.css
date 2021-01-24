@@ -63,6 +63,20 @@ header {
   color: black;
   background-color: #d7dfff;
 }
+.cart_totals {
+  width: 290px;
+  height: 100px;
+  background-color: #d7dfff;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  padding: 20px 0;
+  transition: 0.5s;
+}
+#cart-total::before {
+  content: "$";
+}
 .bag_product {
   width: 100%;
   display: flex;

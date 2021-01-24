@@ -5,7 +5,6 @@ let closeBtn = document.getElementById("closebtn");
 let closeBtnCard = document.getElementById("closebtncard");
 let mainBlock = document.getElementById("container");
 function ShowMenu() {
-  console.log("ok");
   menu.style.width = "250px";
   mainBlock.style.marginRight = "250px";
   mainBlock.style.marginLeft = "-250px";
@@ -20,9 +19,8 @@ function closeNav() {
   closeBtn.style.display = "none";
 }
 function ShowCard() {
-  console.log("ok");
   card.style.width = "350px";
-  card.style.padding = "50px 30px 50px 30px";
+  card.style.padding = "50px 30px 110px 30px";
   mainBlock.style.marginRight = "350px";
   mainBlock.style.marginLeft = "-350px";
   mainBlock.style.position = "fixed";
@@ -327,6 +325,7 @@ function DisplayList(data, productBlock, rows, currentPage, callback) {
     newProductPrice.innerHTML = element.price;
     newProductInfo.appendChild(newProductPrice);
     newProductPrice.setAttribute("id", "productPrice");
+    newProductPrice.setAttribute("class", "productPrice");
 
     const newButton = document.createElement("button");
     newButton.className = "product_buy";
@@ -383,32 +382,43 @@ function cartProducts() {
       let partPath = fullPath.slice(pos);
       item.image = partPath;
       console.log(item);
-      bagData.push(item);
-      bagData.forEach((element) => {
-        const newProduct = document.createElement("div");
-        newProduct.className = "bag_product";
-        card.appendChild(newProduct);
 
-        const newImageTag = document.createElement("img");
-        newImageTag.className = "item_bag_photo"; //add img tag to Image block
-        newProduct.appendChild(newImageTag);
-        const newImageAttrubute = document.createAttribute("src"); //add img to Tag
-        newImageTag.setAttribute("src", element.image);
+      const cartItem = document.createElement("div");
 
-        const newProductText = document.createElement("div");
-        newProductText.className = "bag_text";
-        newProduct.appendChild(newProductText);
+      cartItem.innerHTML = `
+      <div class="bag_product">
+      <img class="item_bag_photo" src="${item.image}">
+      <div class="bag_text">
+      <p>${item.name}</p>
+      <p class = "bagCartPrice"> ${item.price}</p>
+      </div>
+      <a href="#">&times;</a>
+      </div>`;
 
-        const newProductName = document.createElement("p"); //add name of product
-        newProductName.innerHTML = element.name;
-        newProductText.appendChild(newProductName);
+      const cart = document.getElementById("card");
+      const total = document.querySelector(".cart-total");
+      cart.insertBefore(cartItem, total);
 
-        const newProductPrice = document.createElement("p"); //add price of product
-        newProductPrice.innerHTML = element.price;
-        newProductText.appendChild(newProductPrice);
-
-        // const itemCart = document.createElement("");
-      });
+      ShowTotal();
     });
   });
+  function ShowTotal() {
+    const total = [];
+    const items = document.querySelectorAll(".bagCartPrice");
+    items.forEach(function (item) {
+      total.push(parseFloat(item.textContent));
+    });
+    console.log(total);
+    const totalPrice = total.reduce(function (total, item) {
+      console.log(item);
+      console.log(total);
+
+      total += item;
+      return total;
+    }, 0);
+    document.getElementById("cart-total").textContent = totalPrice;
+    // document.getElementById("cart_totals").textContent = finalPrice;
+    // document.getElementById("cart_totals").textContent = finalPrice;
+    console.log(totalPrice);
+  }
 }

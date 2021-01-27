@@ -366,7 +366,6 @@ function PaginationButton(page, data) {
 let bagData = [];
 function cartProducts() {
   let buyBtn = document.querySelectorAll(".product_buy");
-  console.log(buyBtn);
   buyBtn.forEach(function (btn) {
     btn.addEventListener("click", function (event) {
       const item = {};
@@ -381,11 +380,11 @@ function cartProducts() {
       let pos = fullPath.indexOf("assets");
       let partPath = fullPath.slice(pos);
       item.image = partPath;
-      console.log(item);
 
       const cartItem = document.createElement("div");
-
-      cartItem.innerHTML = `
+      bagData.push(item);
+      bagData.forEach((item) => {
+        cartItem.innerHTML = `
       <div class="bag_product">
       <img class="item_bag_photo" src="${item.image}">
       <div class="bag_text">
@@ -394,31 +393,73 @@ function cartProducts() {
       </div>
       <a href="#">&times;</a>
       </div>`;
+      });
 
       const cart = document.getElementById("card");
       const total = document.querySelector(".cart-total");
       cart.insertBefore(cartItem, total);
-
+      let jsonStr = JSON.stringify(bagData);
+      setCookie("cookies", jsonStr, 30);
       ShowTotal();
+      checkCookie();
     });
   });
-  function ShowTotal() {
-    const total = [];
-    const items = document.querySelectorAll(".bagCartPrice");
-    items.forEach(function (item) {
-      total.push(parseFloat(item.textContent));
-    });
-    console.log(total);
-    const totalPrice = total.reduce(function (total, item) {
-      console.log(item);
-      console.log(total);
+}
+function ShowTotal() {
+  const total = [];
+  const items = document.querySelectorAll(".bagCartPrice");
+  items.forEach(function (item) {
+    total.push(parseFloat(item.textContent));
+  });
+  const totalPrice = total.reduce(function (total, item) {
+    total += item;
+    return total;
+  }, 0);
+  document.getElementById("cart-total").textContent = totalPrice;
+}
 
-      total += item;
-      return total;
-    }, 0);
-    document.getElementById("cart-total").textContent = totalPrice;
-    // document.getElementById("cart_totals").textContent = finalPrice;
-    // document.getElementById("cart_totals").textContent = finalPrice;
-    console.log(totalPrice);
+function setCookie(name, value, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  var expires = "expires=" + d.toGMTString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  console.log("COOKIES" + document.cookie);
+}
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
   }
+  return "";
+}
+checkCookie();
+function checkCookie() {
+  let cookies = getCookie("cookies");
+  let cookiesParse = JSON.parse(cookies);
+  console.log(cookiesParse);
+  const cartItem = document.createElement("div");
+  cookiesParse.map((item) => {
+    cartItem.innerHTML = `
+  <div class="bag_product">
+  <img class="item_bag_photo" src="${item.image}">
+  <div class="bag_text">
+  <p>${item.name}</p>
+  <p class = "bagCartPrice"> ${item.price}</p>
+  </div>
+  <a href="#">&times;</a>
+  </div>`;
+  });
+  console.log(cartItem);
+  const cart = document.getElementById("card");
+  const total = document.querySelector(".cart-total");
+  cart.insertBefore(cartItem, total);
+  ShowTotal();
 }

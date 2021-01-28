@@ -457,7 +457,6 @@ function checkCookie() {
   <a href="#">&times;</a>
   </div>`;
   });
-  console.log(cartItem);
   const cart = document.getElementById("card");
   const total = document.querySelector(".cart-total");
   cart.insertBefore(cartItem, total);

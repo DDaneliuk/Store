@@ -25,6 +25,7 @@ function ShowCard() {
   mainBlock.style.marginLeft = "-350px";
   mainBlock.style.position = "fixed";
   closeBtnCard.style.display = "block";
+  deleteProduct();
 }
 function closeCard() {
   card.style.width = "0";
@@ -250,14 +251,7 @@ function FilterPrice(size, color, price) {
     }
   });
 }
-function EmptyData() {
-  console.log("empty");
-  productBlock.className = "product_block";
-  let h3 = document.createElement("h3");
-  h3.innerHTML = "Sorry";
-  console.log(h3);
-  productBlock.appendChild(h3);
-}
+
 function disp(data) {
   DisplayList(data, productBlock, rows, currentPage, cartProducts);
   SetupPagination(data, pagination_element, rows);
@@ -363,6 +357,7 @@ function PaginationButton(page, data) {
   });
   return button;
 }
+
 let bagData = [];
 function cartProducts() {
   let buyBtn = document.querySelectorAll(".product_buy");
@@ -382,6 +377,7 @@ function cartProducts() {
       item.image = partPath;
 
       const cartItem = document.createElement("div");
+      cartItem.setAttribute("id", "cartItem");
       bagData.push(item);
       bagData.forEach((item) => {
         cartItem.innerHTML = `
@@ -391,17 +387,15 @@ function cartProducts() {
       <p>${item.name}</p>
       <p class = "bagCartPrice"> ${item.price}</p>
       </div>
-      <a href="#">&times;</a>
+      <a href="#" class="delProduct">&times;</a>
       </div>`;
       });
-
       const cart = document.getElementById("card");
       const total = document.querySelector(".cart-total");
       cart.insertBefore(cartItem, total);
       let jsonStr = JSON.stringify(bagData);
       setCookie("cookies", jsonStr, 30);
       ShowTotal();
-      checkCookie();
     });
   });
 }
@@ -441,12 +435,15 @@ function getCookie(cname) {
   return "";
 }
 checkCookie();
+
 function checkCookie() {
   let cookies = getCookie("cookies");
   let cookiesParse = JSON.parse(cookies);
   console.log(cookiesParse);
   const cartItem = document.createElement("div");
-  cookiesParse.map((item) => {
+  cartItem.setAttribute("id", "cartItem");
+  bagData = cookiesParse;
+  bagData.forEach((item) => {
     cartItem.innerHTML = `
   <div class="bag_product">
   <img class="item_bag_photo" src="${item.image}">
@@ -454,11 +451,23 @@ function checkCookie() {
   <p>${item.name}</p>
   <p class = "bagCartPrice"> ${item.price}</p>
   </div>
-  <a href="#">&times;</a>
+  <a href="#" class="delProduct">&times;</a>
   </div>`;
+    console.log(cartItem);
+    const cart = document.getElementById("card");
+    cart.appendChild(cartItem);
   });
-  const cart = document.getElementById("card");
-  const total = document.querySelector(".cart-total");
-  cart.insertBefore(cartItem, total);
   ShowTotal();
+}
+function deleteProduct() {
+  let delBtn = document.querySelectorAll(".delProduct");
+  console.log(delBtn);
+  delBtn.forEach(function (btn) {
+    btn.addEventListener("click", function (event) {
+      console.log(event.target);
+      let cart = document.getElementById("cartItem");
+      cart.innerHTML = "";
+      ShowTotal();
+    });
+  });
 }

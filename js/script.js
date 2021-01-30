@@ -25,7 +25,6 @@ function ShowCard() {
   mainBlock.style.marginLeft = "-350px";
   mainBlock.style.position = "fixed";
   closeBtnCard.style.display = "block";
-  deleteProduct();
 }
 function closeCard() {
   card.style.width = "0";
@@ -387,7 +386,7 @@ function cartProducts() {
       <p>${item.name}</p>
       <p class = "bagCartPrice"> ${item.price}</p>
       </div>
-      <a href="#" class="delProduct">&times;</a>
+      <a href="javascript:void(0)" class="delProduct">&times;</a>
       </div>`;
       });
       const cart = document.getElementById("card");
@@ -396,6 +395,7 @@ function cartProducts() {
       let jsonStr = JSON.stringify(bagData);
       setCookie("cookies", jsonStr, 30);
       ShowTotal();
+      ready();
     });
   });
 }
@@ -451,23 +451,29 @@ function checkCookie() {
   <p>${item.name}</p>
   <p class = "bagCartPrice"> ${item.price}</p>
   </div>
-  <a href="#" class="delProduct">&times;</a>
+  <a href="javascript:void(0)" class="delProduct">&times;</a>
   </div>`;
-    console.log(cartItem);
     const cart = document.getElementById("card");
     cart.appendChild(cartItem);
   });
   ShowTotal();
 }
-function deleteProduct() {
-  let delBtn = document.querySelectorAll(".delProduct");
-  console.log(delBtn);
-  delBtn.forEach(function (btn) {
-    btn.addEventListener("click", function (event) {
-      console.log(event.target);
-      let cart = document.getElementById("cartItem");
-      cart.innerHTML = "";
-      ShowTotal();
-    });
-  });
+if (document.readyState == 'loading') {
+  document.addEventListener('DOMContentLoaded', ready)
+} else {
+  ready()
+}
+function ready() {
+  var removeCartItemButtons = document.getElementsByClassName('delProduct')
+  console.log(removeCartItemButtons);
+  for (var i = 0; i < removeCartItemButtons.length; i++) {
+      var button = removeCartItemButtons[i]
+      button.addEventListener('click', removeCartItem)
+  }
+}
+
+function removeCartItem(event) {
+  var buttonClicked = event.target
+  buttonClicked.parentElement.parentElement.remove()
+  ShowTotal();
 }

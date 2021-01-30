@@ -64,7 +64,7 @@ header {
   background-color: #d7dfff;
 }
 .cart_totals {
-  width: 290px;
+  width:0px;
   height: 100px;
   background-color: #d7dfff;
   display: flex;
@@ -103,6 +103,12 @@ header {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+}
+.showcardFun{
+  margin-right :350px;
+  margin-left :-350px;
+  position :fixed;
+  -webkit-backface-visibility: hidden;
 }
 .search_bar input[type="text"] {
   width: 200px;

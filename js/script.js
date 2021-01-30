@@ -4,6 +4,7 @@ let menu = document.getElementById("hideMenu");
 let closeBtn = document.getElementById("closebtn");
 let closeBtnCard = document.getElementById("closebtncard");
 let mainBlock = document.getElementById("container");
+let cartTotals = document.getElementById("cart_totals");
 function ShowMenu() {
   menu.style.width = "250px";
   mainBlock.style.marginRight = "250px";
@@ -20,14 +21,14 @@ function closeNav() {
 }
 function ShowCard() {
   card.style.width = "350px";
+  cartTotals.style.width = "290px"
   card.style.padding = "50px 30px 110px 30px";
-  mainBlock.style.marginRight = "350px";
-  mainBlock.style.marginLeft = "-350px";
-  mainBlock.style.position = "fixed";
+  mainBlock.classList.add("showcardFun")
   closeBtnCard.style.display = "block";
 }
 function closeCard() {
   card.style.width = "0";
+  cartTotals.style.width = "0"
   card.style.padding = "0";
   mainBlock.style.marginRight = "0";
   mainBlock.style.marginLeft = "0";

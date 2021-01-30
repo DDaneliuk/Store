@@ -35,7 +35,7 @@ function closeCard() {
   mainBlock.style.position = "relative";
   closeBtnCard.style.display = "block";
 }
-
+let CartArr = [];
 let allData;
 let currentColorData;
 let currentSizeData;
@@ -362,7 +362,6 @@ function setCookie(name, value, exdays) {
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
   var expires = "expires=" + d.toGMTString();
   document.cookie = name + "=" + value + ";" + expires + ";path=/";
-  console.log("COOKIES " + document.cookie);
 }
 function getCookie(cname) {
   var name = cname + "=";
@@ -381,11 +380,11 @@ function getCookie(cname) {
 }
 
 if (document.readyState == 'loading') {
-  document.addEventListener('DOMContentLoaded', ready)
+  document.addEventListener('DOMContentLoaded', ready, checkCookie())
 } else {
   ready();
-}
-let CartArr = []
+  checkCookie();
+} 
 function ready() {
   let removeCartItemBtn = document.getElementsByClassName('delProduct')
   for (var i = 0; i < removeCartItemBtn.length; i++) {
@@ -397,7 +396,23 @@ function ready() {
     var button = addCartItemBtn[i]
     button.addEventListener('click', addCartClicked)
 }
+}
 
+function checkCookie() {
+  let cartCookies = getCookie("cart");
+  if (cartCookies == ""){
+      console.log("Empty")
+  }
+  else{
+  let cartCookies = getCookie("cart");
+  
+  CartArr = JSON.parse(cartCookies);
+  CartArr.map((item) =>{
+    addItemToCart(item)
+  })
+  ShowTotal();
+}
+}
 function addCartClicked(event){
   const item = {};
   let name = event.target.parentElement.firstElementChild.textContent;
@@ -410,9 +425,11 @@ function addCartClicked(event){
   item.image = partPath;
   addItemToCart(item)
   CartArr.push(item)
+  console.log(CartArr)
   let cartCookiesJSON = JSON.stringify(CartArr)
   setCookie("cart", cartCookiesJSON, 30)
 }
+
 function addItemToCart(item){
   let cartItem = document.createElement('div');
   let cartSpace = document.getElementById('BagSpace')
@@ -430,24 +447,6 @@ function addItemToCart(item){
     ShowTotal();
     cartItem.getElementsByClassName('delProduct')[0].addEventListener('click', removeCartItem)
 }
-(function checkCookie() {
-  if(!document.cookie){
-    return
-  }
-  else{
-  let cartCookies = getCookie("cart");
-  console.log(cartCookies);
-  let cartcookiesParse = JSON.parse(cartCookies);
-  console.log(cartcookiesParse);
-  let cartCookiesJSON = JSON.stringify(cartcookiesParse)
-  setCookie("cart", cartCookiesJSON, 30)
-  cartcookiesParse.map((item) =>{
-    addItemToCart(item)
-  })
-  
-  ShowTotal();
-}
-} ())
 
 function ShowTotal() {
   const total = [];
@@ -466,5 +465,29 @@ function removeCartItem(event) {
   var buttonClicked = event.target
   buttonClicked.parentElement.parentElement.remove()
   ShowTotal();
+  UpdateCart(event)
 }
+
+function UpdateCart(){
+  let bagStatus = document.getElementsByClassName("bag_product");
+  console.log(bagStatus) 
+  const item = {};
+  
+
+
+  let name = event.target.parentElement.children[1].children[0].textContent;
+  item.name = name
+  let price = event.target.parentElement.children[1].children[1].textContent;
+  item.price = price
+  
+  let fullPath = event.target.parentElement.firstElementChild.src
+  let pos = fullPath.indexOf("assets");
+  let partPath = fullPath.slice(pos);
+  item.image = partPath;
+  console.log(item)
+  CartArr.push(item)
+  console.log(CartArr)
+  // let cartCookiesJSON = JSON.stringify(CartArr)
+  // setCookie("cart", cartCookiesJSON, 30)
 }
+

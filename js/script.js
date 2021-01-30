@@ -52,7 +52,7 @@ fetch("./products.json")
   .then((data) => {
     allData = data;
     currentData = data;
-    disp(currentData, cartProducts);
+    disp(currentData);
   });
 
 // add size tag after choose
@@ -253,7 +253,7 @@ function FilterPrice(size, color, price) {
 }
 
 function disp(data) {
-  DisplayList(data, productBlock, rows, currentPage, cartProducts);
+  DisplayList(data, productBlock, rows, currentPage, ready);
   SetupPagination(data, pagination_element, rows);
   return data;
 }
@@ -326,7 +326,7 @@ function DisplayList(data, productBlock, rows, currentPage, callback) {
     newButton.textContent = "Order now";
     newProductInfo.appendChild(newButton);
   });
-  cartProducts();
+  ready();
 }
 
 function SetupPagination(data, productBlock, rows) {
@@ -357,68 +357,12 @@ function PaginationButton(page, data) {
   });
   return button;
 }
-
-let bagData = [];
-function cartProducts() {
-  let buyBtn = document.querySelectorAll(".product_buy");
-  buyBtn.forEach(function (btn) {
-    btn.addEventListener("click", function (event) {
-      const item = {};
-      let name = event.target.parentElement.firstElementChild.textContent;
-      item.name = name;
-
-      let price = event.target.parentElement.children[2].textContent;
-      item.price = price;
-
-      let fullPath =
-        event.target.parentElement.previousSibling.firstElementChild.src;
-      let pos = fullPath.indexOf("assets");
-      let partPath = fullPath.slice(pos);
-      item.image = partPath;
-
-      const cartItem = document.createElement("div");
-      cartItem.setAttribute("id", "cartItem");
-      bagData.push(item);
-      bagData.forEach((item) => {
-        cartItem.innerHTML = `
-      <div class="bag_product">
-      <img class="item_bag_photo" src="${item.image}">
-      <div class="bag_text">
-      <p>${item.name}</p>
-      <p class = "bagCartPrice"> ${item.price}</p>
-      </div>
-      <a href="javascript:void(0)" class="delProduct">&times;</a>
-      </div>`;
-      });
-      const cart = document.getElementById("card");
-      const total = document.querySelector(".cart-total");
-      cart.insertBefore(cartItem, total);
-      let jsonStr = JSON.stringify(bagData);
-      setCookie("cookies", jsonStr, 30);
-      ShowTotal();
-      ready();
-    });
-  });
-}
-function ShowTotal() {
-  const total = [];
-  const items = document.querySelectorAll(".bagCartPrice");
-  items.forEach(function (item) {
-    total.push(parseFloat(item.textContent));
-  });
-  const totalPrice = total.reduce(function (total, item) {
-    total += item;
-    return total;
-  }, 0);
-  document.getElementById("cart-total").textContent = totalPrice;
-}
-
 function setCookie(name, value, exdays) {
   var d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
   var expires = "expires=" + d.toGMTString();
   document.cookie = name + "=" + value + ";" + expires + ";path=/";
-  console.log("COOKIES" + document.cookie);
+  console.log("COOKIES " + document.cookie);
 }
 function getCookie(cname) {
   var name = cname + "=";
@@ -435,46 +379,92 @@ function getCookie(cname) {
   }
   return "";
 }
-checkCookie();
 
-function checkCookie() {
-  let cookies = getCookie("cookies");
-  let cookiesParse = JSON.parse(cookies);
-  console.log(cookiesParse);
-  const cartItem = document.createElement("div");
-  cartItem.setAttribute("id", "cartItem");
-  bagData = cookiesParse;
-  bagData.forEach((item) => {
-    cartItem.innerHTML = `
-  <div class="bag_product">
-  <img class="item_bag_photo" src="${item.image}">
-  <div class="bag_text">
-  <p>${item.name}</p>
-  <p class = "bagCartPrice"> ${item.price}</p>
-  </div>
-  <a href="javascript:void(0)" class="delProduct">&times;</a>
-  </div>`;
-    const cart = document.getElementById("card");
-    cart.appendChild(cartItem);
-  });
-  ShowTotal();
-}
 if (document.readyState == 'loading') {
   document.addEventListener('DOMContentLoaded', ready)
 } else {
-  ready()
+  ready();
 }
+let CartArr = []
 function ready() {
-  var removeCartItemButtons = document.getElementsByClassName('delProduct')
-  console.log(removeCartItemButtons);
-  for (var i = 0; i < removeCartItemButtons.length; i++) {
-      var button = removeCartItemButtons[i]
+  let removeCartItemBtn = document.getElementsByClassName('delProduct')
+  for (var i = 0; i < removeCartItemBtn.length; i++) {
+      var button = removeCartItemBtn[i]
       button.addEventListener('click', removeCartItem)
   }
+  let addCartItemBtn = document.getElementsByClassName('product_buy');
+  for (var i = 0; i < addCartItemBtn.length; i++) {
+    var button = addCartItemBtn[i]
+    button.addEventListener('click', addCartClicked)
+}
+
+function addCartClicked(event){
+  const item = {};
+  let name = event.target.parentElement.firstElementChild.textContent;
+  item.name = name;
+  let price = event.target.parentElement.children[2].textContent;
+  item.price = price;
+  let fullPath = event.target.parentElement.previousSibling.firstElementChild.src;
+  let pos = fullPath.indexOf("assets");
+  let partPath = fullPath.slice(pos);
+  item.image = partPath;
+  addItemToCart(item)
+  CartArr.push(item)
+  let cartCookiesJSON = JSON.stringify(CartArr)
+  setCookie("cart", cartCookiesJSON, 30)
+}
+function addItemToCart(item){
+  let cartItem = document.createElement('div');
+  let cartSpace = document.getElementById('BagSpace')
+  let cartContents = `
+      <div class="bag_product">
+        <img class="item_bag_photo" src="${item.image}">
+        <div class="bag_text">
+        <p>${item.name}</p>
+        <p class = "bagCartPrice"> ${item.price}</p>
+      </div>
+        <a href="javascript:void(0)" class="delProduct">&times;</a>
+      </div>`
+    cartItem.innerHTML = cartContents
+    cartSpace.append(cartItem)
+    ShowTotal();
+    cartItem.getElementsByClassName('delProduct')[0].addEventListener('click', removeCartItem)
+}
+(function checkCookie() {
+  if(!document.cookie){
+    return
+  }
+  else{
+  let cartCookies = getCookie("cart");
+  console.log(cartCookies);
+  let cartcookiesParse = JSON.parse(cartCookies);
+  console.log(cartcookiesParse);
+  let cartCookiesJSON = JSON.stringify(cartcookiesParse)
+  setCookie("cart", cartCookiesJSON, 30)
+  cartcookiesParse.map((item) =>{
+    addItemToCart(item)
+  })
+  
+  ShowTotal();
+}
+} ())
+
+function ShowTotal() {
+  const total = [];
+  const items = document.querySelectorAll(".bagCartPrice");
+  items.forEach(function (item) {
+    total.push(parseFloat(item.textContent));
+  });
+  const totalPrice = total.reduce(function (total, item) {
+    total += item;
+    return total;
+  }, 0);
+  document.getElementById("cart-total").textContent = totalPrice;
 }
 
 function removeCartItem(event) {
   var buttonClicked = event.target
   buttonClicked.parentElement.parentElement.remove()
   ShowTotal();
+}
 }

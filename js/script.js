@@ -132,12 +132,10 @@ for (const button of colorBtn) {
     if (color.checked) {
       colorArrValue.push(color.value);
       tagColor.innerHTML = "color: " + colorArrValue.join(", ");
-      console.log(colorArrValue);
       FilterColor(size, colorArrValue, priceSlider);
       disp(choosedData);
     }
     if (!color.checked) {
-      console.log(color.value);
       const indexColor = colorArrValue.indexOf(color.value);
       if (indexColor > -1) {
         colorArrValue.splice(indexColor, 1);
@@ -172,15 +170,12 @@ function FilterColor(size, color, price) {
         if (color.includes(item.color) && item.price <= itemPrice) {
           TempArray.push(item);
           choosedData = TempArray;
-          console.log(item);
         }
       }
       if (price == undefined) {
         if (color.includes(item.color) && size == item.size) {
-          console.log(item.color);
           TempArray.push(item);
           choosedData = TempArray;
-          console.log(item);
         }
       } else {
         itemPrice = Number(price);
@@ -191,7 +186,6 @@ function FilterColor(size, color, price) {
         ) {
           TempArray.push(item);
           choosedData = TempArray;
-          console.log(item);
         }
       }
     });
@@ -465,29 +459,29 @@ function removeCartItem(event) {
   var buttonClicked = event.target
   buttonClicked.parentElement.parentElement.remove()
   ShowTotal();
-  UpdateCart(event)
+  UpdateCart()
 }
 
 function UpdateCart(){
-  let bagStatus = document.getElementsByClassName("bag_product");
-  console.log(bagStatus) 
-  const item = {};
-  
-
-
-  let name = event.target.parentElement.children[1].children[0].textContent;
-  item.name = name
-  let price = event.target.parentElement.children[1].children[1].textContent;
-  item.price = price
-  
-  let fullPath = event.target.parentElement.firstElementChild.src
-  let pos = fullPath.indexOf("assets");
-  let partPath = fullPath.slice(pos);
-  item.image = partPath;
-  console.log(item)
-  CartArr.push(item)
+  const cartTotal = [];
+  let items = document.querySelectorAll(".bag_product");
+  console.log(items) 
+  items.forEach(function (item) {
+    const items = {}
+    let name = item.children[1].children[0].textContent;
+    let price = item.children[1].children[1].textContent;
+    let fullPath = item.children[0].src;
+    let pos = fullPath.indexOf("assets");
+    let partPath = fullPath.slice(pos);
+    items.name = name;
+    items.price = price;
+    items.image = partPath;
+    console.log(items)
+  cartTotal.push(items)
+  });
+  CartArr = cartTotal
   console.log(CartArr)
-  // let cartCookiesJSON = JSON.stringify(CartArr)
-  // setCookie("cart", cartCookiesJSON, 30)
+  let cartCookiesJSON = JSON.stringify(CartArr)
+  setCookie("cart", cartCookiesJSON, 30)
 }
 
